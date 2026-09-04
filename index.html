@@ -229,6 +229,54 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hira
 .related-q-item .rq-text{font-size:12px;color:#333;line-height:1.6;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .related-q-item .rq-meta{font-size:11px;color:#999;display:flex;gap:8px}
 .related-q-item .rq-ans{color:#2e7d32;font-weight:600}
+/* 数据分析面板 */
+.analysis-panel{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.analysis-title{font-size:15px;font-weight:700;color:#333;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #e3f2fd}
+.analysis-section{margin-bottom:14px}
+.analysis-section:last-child{margin-bottom:0}
+.analysis-subtitle{font-size:13px;font-weight:600;color:#555;margin-bottom:8px}
+.pass-predict{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:10px;padding:14px;color:#fff;margin-bottom:14px;text-align:center}
+.pass-predict .pp-label{font-size:12px;opacity:0.9;margin-bottom:4px}
+.pass-predict .pp-score{font-size:32px;font-weight:800;margin:4px 0}
+.pass-predict .pp-desc{font-size:11px;opacity:0.85;margin-top:4px;line-height:1.5}
+.pp-bar{height:8px;background:rgba(255,255,255,0.25);border-radius:4px;margin-top:8px;overflow:hidden}
+.pp-bar-fill{height:100%;background:#fff;border-radius:4px;transition:width 0.5s}
+.progress-row{margin-bottom:8px}
+.progress-row:last-child{margin-bottom:0}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:#666;margin-bottom:3px}
+.progress-label .pl-name{font-weight:600}
+.progress-label .pl-val{color:#888}
+.progress-track{height:8px;background:#f0f0f0;border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;border-radius:4px;transition:width 0.5s}
+.progress-fill.c{background:linear-gradient(90deg,#4a90d9,#357abd)}
+.progress-fill.public{background:linear-gradient(90deg,#66bb6a,#43a047)}
+.progress-fill.ms{background:linear-gradient(90deg,#ff9800,#f57c00)}
+.progress-fill.wps{background:linear-gradient(90deg,#ab47bc,#8e24aa)}
+.progress-fill.accuracy-high{background:linear-gradient(90deg,#66bb6a,#43a047)}
+.progress-fill.accuracy-mid{background:linear-gradient(90deg,#ffb74d,#ff9800)}
+.progress-fill.accuracy-low{background:linear-gradient(90deg,#ef5350,#e53935)}
+.difficulty-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.difficulty-card{background:#f8f9fa;border-radius:8px;padding:10px;text-align:center}
+.difficulty-card .dc-label{font-size:11px;color:#888;margin-bottom:4px}
+.difficulty-card .dc-value{font-size:18px;font-weight:700}
+.difficulty-card .dc-value.green{color:#43a047}
+.difficulty-card .dc-value.orange{color:#f57c00}
+.difficulty-card .dc-value.red{color:#e53935}
+.difficulty-card .dc-sub{font-size:10px;color:#aaa;margin-top:2px}
+.weak-list{display:flex;flex-direction:column;gap:6px}
+.weak-item{display:flex;justify-content:space-between;align-items:center;background:#fff3e0;border-radius:6px;padding:8px 10px;border-left:3px solid #ff9800}
+.weak-item .wi-name{font-size:12px;font-weight:600;color:#e65100}
+.weak-item .wi-rate{font-size:11px;color:#bf360c;font-weight:700}
+.weak-item.good{background:#e8f5e9;border-left-color:#66bb6a}
+.weak-item.good .wi-name{color:#2e7d32}
+.weak-item.good .wi-rate{color:#1b5e20}
+.advice-list{display:flex;flex-direction:column;gap:8px}
+.advice-item{background:#f5f5f5;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;line-height:1.6;border-left:3px solid #4a90d9}
+.advice-item.warn{border-left-color:#ff9800;background:#fff8e1}
+.advice-item.danger{border-left-color:#f44336;background:#ffebee}
+.advice-item.success{border-left-color:#4caf50;background:#e8f5e9}
+.advice-item .ai-title{font-weight:700;margin-bottom:3px;color:#333}
+
 /* 我的页面 */
 .profile-header{background:linear-gradient(135deg,#4a90d9 0%,#357abd 100%);border-radius:12px;padding:20px;color:#fff;margin-bottom:10px;text-align:center}
 .profile-header .avatar{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 8px}
@@ -401,6 +449,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hira
       <div class="level" id="mineLevel">继续加油！</div>
     </div>
     <div class="detail-stats" id="mineStats"></div>
+    
+    <!-- 数据分析面板 -->
+    <div class="analysis-panel">
+      <div class="analysis-title">📊 学习数据分析</div>
+      
+      <!-- 通过率预测 -->
+      <div class="pass-predict" id="passPredict"></div>
+      
+      <!-- 各科目进度 -->
+      <div class="analysis-section">
+        <div class="analysis-subtitle">📈 各科目学习进度</div>
+        <div id="catProgress"></div>
+      </div>
+      
+      <!-- 各科目正确率 -->
+      <div class="analysis-section">
+        <div class="analysis-subtitle">🎯 各科目正确率</div>
+        <div id="catAccuracy"></div>
+      </div>
+      
+      <!-- 难度分析 -->
+      <div class="analysis-section">
+        <div class="analysis-subtitle">💪 难度分析</div>
+        <div id="difficultyAnalysis"></div>
+      </div>
+      
+      <!-- 薄弱知识点 -->
+      <div class="analysis-section">
+        <div class="analysis-subtitle">⚠️ 薄弱知识点（需加强）</div>
+        <div id="weakPoints"></div>
+      </div>
+      
+      <!-- 学习建议 -->
+      <div class="analysis-section">
+        <div class="analysis-subtitle">💡 学习建议</div>
+        <div id="studyAdvice"></div>
+      </div>
+    </div>
+    
     <div class="menu-list">
       <div class="menu-item" onclick="showWrongBook()">
         <span class="m-icon">📕</span><span class="m-text">我的错题本</span>
@@ -1271,6 +1358,204 @@ function renderMine() {
   else if (stats.done > 100) level = '积极学习者 📖';
   else if (stats.done > 20) level = '入门学习者 🌱';
   document.getElementById('mineLevel').textContent = level;
+  
+  renderAnalysis();
+}
+
+function renderAnalysis() {
+  const catMap = {c:'C语言', public:'公共基础', ms:'MS Office', wps:'WPS Office'};
+  const catColor = {c:'c', public:'public', ms:'ms', wps:'wps'};
+  
+  // 按科目统计
+  const catStats = {};
+  for (const cat of ['c','public','ms','wps']) {
+    const catQs = QUESTIONS.filter(q => q.cat === cat);
+    const doneQs = catQs.filter(q => state.records[q.id]);
+    const correctQs = doneQs.filter(q => state.records[q.id].correct);
+    catStats[cat] = {
+      total: catQs.length,
+      done: doneQs.length,
+      correct: correctQs.length,
+      wrong: doneQs.length - correctQs.length,
+      rate: doneQs.length > 0 ? Math.round(correctQs.length / doneQs.length * 100) : 0,
+      progress: catQs.length > 0 ? Math.round(doneQs.length / catQs.length * 100) : 0
+    };
+  }
+  
+  // 1. 各科目进度
+  let progressHtml = '';
+  for (const cat of ['c','public','ms','wps']) {
+    const s = catStats[cat];
+    progressHtml += `<div class="progress-row">
+      <div class="progress-label"><span class="pl-name">${catMap[cat]}</span><span class="pl-val">${s.done}/${s.total}题 (${s.progress}%)</span></div>
+      <div class="progress-track"><div class="progress-fill ${catColor[cat]}" style="width:${s.progress}%"></div></div>
+    </div>`;
+  }
+  document.getElementById('catProgress').innerHTML = progressHtml;
+  
+  // 2. 各科目正确率
+  let accuracyHtml = '';
+  for (const cat of ['c','public','ms','wps']) {
+    const s = catStats[cat];
+    const accClass = s.rate >= 70 ? 'accuracy-high' : s.rate >= 50 ? 'accuracy-mid' : 'accuracy-low';
+    const accColor = s.rate >= 70 ? '#43a047' : s.rate >= 50 ? '#f57c00' : '#e53935';
+    accuracyHtml += `<div class="progress-row">
+      <div class="progress-label"><span class="pl-name">${catMap[cat]}</span><span class="pl-val" style="color:${accColor};font-weight:700">${s.done > 0 ? s.rate + '%' : '未开始'} (${s.correct}/${s.done})</span></div>
+      <div class="progress-track"><div class="progress-fill ${accClass}" style="width:${s.done > 0 ? s.rate : 0}%"></div></div>
+    </div>`;
+  }
+  document.getElementById('catAccuracy').innerHTML = accuracyHtml;
+  
+  // 3. 难度分析（精选题 vs 普通题，高频题 vs 低频题）
+  const starQs = QUESTIONS.filter(q => q.is_star);
+  const starDone = starQs.filter(q => state.records[q.id]);
+  const starCorrect = starDone.filter(q => state.records[q.id].correct);
+  const starRate = starDone.length > 0 ? Math.round(starCorrect.length / starDone.length * 100) : 0;
+  
+  const normalQs = QUESTIONS.filter(q => !q.is_star);
+  const normalDone = normalQs.filter(q => state.records[q.id]);
+  const normalCorrect = normalDone.filter(q => state.records[q.id].correct);
+  const normalRate = normalDone.length > 0 ? Math.round(normalCorrect.length / normalDone.length * 100) : 0;
+  
+  const highFreqQs = QUESTIONS.filter(q => q.frequency === '高频');
+  const highFreqDone = highFreqQs.filter(q => state.records[q.id]);
+  const highFreqCorrect = highFreqDone.filter(q => state.records[q.id].correct);
+  const highFreqRate = highFreqDone.length > 0 ? Math.round(highFreqCorrect.length / highFreqDone.length * 100) : 0;
+  
+  document.getElementById('difficultyAnalysis').innerHTML = `
+    <div class="difficulty-grid">
+      <div class="difficulty-card">
+        <div class="dc-label">精选题正确率</div>
+        <div class="dc-value ${starRate >= 70 ? 'green' : starRate >= 50 ? 'orange' : 'red'}">${starDone.length > 0 ? starRate + '%' : '-'}</div>
+        <div class="dc-sub">${starCorrect}/${starDone}题</div>
+      </div>
+      <div class="difficulty-card">
+        <div class="dc-label">普通题正确率</div>
+        <div class="dc-value ${normalRate >= 70 ? 'green' : normalRate >= 50 ? 'orange' : 'red'}">${normalDone.length > 0 ? normalRate + '%' : '-'}</div>
+        <div class="dc-sub">${normalCorrect}/${normalDone}题</div>
+      </div>
+      <div class="difficulty-card">
+        <div class="dc-label">高频题正确率</div>
+        <div class="dc-value ${highFreqRate >= 70 ? 'green' : highFreqRate >= 50 ? 'orange' : 'red'}">${highFreqDone.length > 0 ? highFreqRate + '%' : '-'}</div>
+        <div class="dc-sub">${highFreqCorrect}/${highFreqDone}题</div>
+      </div>
+      <div class="difficulty-card">
+        <div class="dc-label">错题重练</div>
+        <div class="dc-value orange">${state.wrongs.length}</div>
+        <div class="dc-sub">道待复习</div>
+      </div>
+    </div>`;
+  
+  // 4. 薄弱知识点分析
+  const tagStats = {};
+  for (const q of QUESTIONS) {
+    if (!state.records[q.id]) continue;
+    for (const tag of (q.tags || [])) {
+      if (!tagStats[tag]) tagStats[tag] = {done:0, correct:0};
+      tagStats[tag].done++;
+      if (state.records[q.id].correct) tagStats[tag].correct++;
+    }
+  }
+  const tagList = Object.entries(tagStats)
+    .filter(([_, s]) => s.done >= 3)
+    .map(([name, s]) => ({name, rate: Math.round(s.correct / s.done * 100), done: s.done, correct: s.correct}))
+    .sort((a, b) => a.rate - b.rate);
+  
+  const weakTags = tagList.filter(t => t.rate < 60).slice(0, 5);
+  const strongTags = tagList.filter(t => t.rate >= 80).slice(0, 3);
+  
+  let weakHtml = '';
+  if (weakTags.length === 0) {
+    if (tagList.length === 0) {
+      weakHtml = '<div style="text-align:center;color:#999;font-size:12px;padding:10px">多刷一些题目后会显示薄弱知识点分析</div>';
+    } else {
+      weakHtml = '<div style="text-align:center;color:#43a047;font-size:12px;padding:10px">🎉 暂无明显薄弱知识点，继续保持！</div>';
+    }
+  } else {
+    weakHtml = '<div class="weak-list">' + weakTags.map(t => 
+      `<div class="weak-item"><span class="wi-name">${t.name}</span><span class="wi-rate">正确率 ${t.rate}% (${t.correct}/${t.done})</span></div>`
+    ).join('') + '</div>';
+  }
+  if (strongTags.length > 0) {
+    weakHtml += '<div style="margin-top:8px;font-size:11px;color:#888;margin-bottom:4px">擅长知识点：</div>';
+    weakHtml += '<div class="weak-list">' + strongTags.map(t => 
+      `<div class="weak-item good"><span class="wi-name">${t.name}</span><span class="wi-rate">正确率 ${t.rate}%</span></div>`
+    ).join('') + '</div>';
+  }
+  document.getElementById('weakPoints').innerHTML = weakHtml;
+  
+  // 5. 通过率预测
+  const totalDone = Object.keys(state.records).length;
+  const totalCorrect = Object.values(state.records).filter(r => r.correct).length;
+  const overallRate = totalDone > 0 ? totalCorrect / totalDone : 0;
+  
+  // 综合评分：正确率权重60% + 刷题量权重40%
+  const rateScore = Math.min(overallRate * 100, 100) * 0.6;
+  const volumeScore = Math.min(totalDone / 200 * 100, 100) * 0.4;
+  const passScore = Math.round(rateScore + volumeScore);
+  
+  let passLevel = '', passDesc = '', passColor = '';
+  if (passScore >= 85) { passLevel = '非常高'; passDesc = '当前状态优秀，保持刷题节奏，通过考试概率极大！'; }
+  else if (passScore >= 70) { passLevel = '较高'; passDesc = '基础扎实，建议继续巩固薄弱环节，通过考试希望很大。'; }
+  else if (passScore >= 50) { passLevel = '中等'; passDesc = '有一定基础，但还需加大刷题量，重点攻克错题和薄弱知识点。'; }
+  else if (passScore >= 30) { passLevel = '较低'; passDesc = '刷题量不足或正确率偏低，建议制定学习计划，每天坚持刷题。'; }
+  else { passLevel = '需努力'; passDesc = '刚开始学习，建议从基础知识点开始，循序渐进地刷题。'; }
+  
+  document.getElementById('passPredict').innerHTML = `
+    <div class="pp-label">考试通过率预测（综合评分）</div>
+    <div class="pp-score">${passScore}分</div>
+    <div class="pp-label" style="font-size:14px;font-weight:700">通过率：${passLevel}</div>
+    <div class="pp-bar"><div class="pp-bar-fill" style="width:${passScore}%"></div></div>
+    <div class="pp-desc">${passDesc}</div>
+    <div class="pp-desc" style="margin-top:6px;opacity:0.75">正确率得分：${Math.round(rateScore)}分 | 刷题量得分：${Math.round(volumeScore)}分</div>
+  `;
+  
+  // 6. 学习建议
+  const advices = [];
+  
+  // 基于刷题量
+  if (totalDone < 50) {
+    advices.push({type:'warn', title:'📚 增加刷题量', text:`目前仅完成${totalDone}道题，建议每天至少刷20-30道题，先把总题量刷到200道以上建立题感。`});
+  } else if (totalDone < 200) {
+    advices.push({type:'', title:'📖 保持刷题节奏', text:`已完成${totalDone}道题，继续保持每天10-20道的刷题量，争取在考试前完成500道以上。`});
+  } else {
+    advices.push({type:'success', title:'🎉 刷题量充足', text:`已完成${totalDone}道题，题量充足！现在重点应该放在错题复习和套题模拟上。`});
+  }
+  
+  // 基于正确率
+  if (totalDone > 20) {
+    if (overallRate < 0.5) {
+      advices.push({type:'danger', title:'⚠️ 正确率需提升', text:`当前正确率${Math.round(overallRate*100)}%偏低，建议先看知识库的知识点讲解，再回来刷题，不要盲目追求题量。`});
+    } else if (overallRate < 0.7) {
+      advices.push({type:'warn', title:'💪 巩固基础', text:`当前正确率${Math.round(overallRate*100)}%，建议重点复习错题本中的题目，理解每道题的解析。`});
+    } else {
+      advices.push({type:'success', title:'✅ 正确率良好', text:`当前正确率${Math.round(overallRate*100)}%，基础扎实！可以开始做套题模拟，训练考试节奏。`});
+    }
+  }
+  
+  // 基于薄弱知识点
+  if (weakTags.length > 0) {
+    advices.push({type:'danger', title:'🎯 重点攻克薄弱环节', text:`以下知识点正确率低于60%，需要重点复习：${weakTags.map(t => t.name).join('、')}。建议在知识库中学习这些知识点后再刷题。`});
+  }
+  
+  // 基于错题
+  if (state.wrongs.length > 10) {
+    advices.push({type:'warn', title:'📕 及时复习错题', text:`错题本中有${state.wrongs.length}道错题，建议使用"错题重练"模式定期复习，确保同类题目不再出错。`});
+  }
+  
+  // 基于精选题
+  if (starDone.length < 30 && totalDone > 50) {
+    advices.push({type:'', title:'⭐ 优先刷精选题', text:'精选题是历年高频考点，建议优先完成精选题库，确保高频考点不丢分。'});
+  }
+  
+  // 套题模拟建议
+  if (totalDone > 300 && overallRate > 0.6) {
+    advices.push({type:'success', title:'📝 开始套题模拟', text:'题量和正确率都达到了一定水平，建议开始按套题进行模拟训练，熟悉考试节奏和时间分配。'});
+  }
+  
+  document.getElementById('studyAdvice').innerHTML = '<div class="advice-list">' + 
+    advices.map(a => `<div class="advice-item ${a.type}"><div class="ai-title">${a.title}</div>${a.text}</div>`).join('') + 
+    '</div>';
 }
 
 function showWrongBook() {
